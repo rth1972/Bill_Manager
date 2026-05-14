@@ -1,14 +1,26 @@
 import json
 import os
-from datetime import datetime
-from time import sleep
+from datetime import datetime, date
+import time
 from collections import defaultdict
+#from pynput import keyboard
 import curses
+#exit_flag = False  # Flag to track if Escape key is pressed
 
-file_name = "data.json"
+# Function to handle key press events
+#def on_press(key):
+#    global exit_flag
+#    if key == keyboard.Key.esc:  # Check if Escape is pressed
+#        exit_flag = True
+
+# Start listening for key presses in the background
+#listener = keyboard.Listener(on_press=on_press)
+#listener.start()
+
+file_name = "/home/robin/python/bills/data.json"
 os.system("cls" if os.name == "nt" else "clear")
 
-category_name = "categories.json"
+category_name = "/home/robin/python/bills/categories.json"
 
 def load_event_themes():
     with open(category_name, "r") as file:
@@ -92,7 +104,12 @@ def view_unpaid_bills(bills):
 
 def add_bills(bills):
     os.system("cls" if os.name == "nt" else "clear")
-    print("\033[1;32m💰 Add a New Bill 💳\033[0m\n")
+    print("\033[1;32m💰 Add a New Bill 💳\033[0m  (press esc to exit)\n")
+
+    # Detect Escape key to exit
+   # if keyboard.is_pressed("esc"):
+   #     print("\nReturning to main menu...")
+   #     return
 
     while True:
         event_date_input = input("Enter the event date (MM/DD/YYYY): ").strip()
@@ -139,7 +156,7 @@ def add_bills(bills):
     try:
         with open(file_name, "w") as file:
             json.dump(bills, file, indent=4)
-        print("\nill added successfully!")
+        print("\nBill added successfully!")
     except:
         print("Failed to save the bill.")
 
@@ -204,6 +221,7 @@ def pay_bills(bills):
     if not unpaid_bills:
         print("\033[1;32mNo unpaid bills to pay!\033[0m")
         input("\nPress Enter to return to the menu...")
+        os.system("cls" if os.name == "nt" else "clear")
         return
 
     print("\033[1;32mSelect a bill to mark as paid:\033[0m\n")
@@ -257,13 +275,44 @@ def exit_screen(stdscr):
     stdscr.refresh()
     stdscr.getch()
 
+def green(text):
+    return f"\033[92m{text}\033[0m"  # Green text
+
+def blue(text):
+    return f"\033[94m{text}\033[0m"  # Blue text
+
+def bold(text):
+    return f"\033[1m{text}\033[0m"  # Bold text
+
+def blue_bg_white_text(text):
+    return f"\033[107;94m{text}\033[0m"  # 107 = Light blue background, 94 = White text
+    
 def main():
     bills = load_bills()
+    global current_time  # Declare current_time as a global variable
+    current_time = time.strftime("%H:%M:%S")
     
     while True:
-        print("\033[1;32mBill Manager\033[0m\n")
-        print("1. View Bills\n2. View Unpaid Bills\n3. Add Bills\n4. Pay Bills\n5. Delete Bills\n6. Grouped Bills\n7. Exit\n")
-        choice = input("Enter Your Choice: ").strip()
+        current_date = date.today()
+        #print(f"{weather.ljust(50)} {current_time}", end="\r\n", flush=True)
+        print(f"📅 {current_date}")
+        print("\n" + "╔" + "═" * 38 + "╗")  # Top border
+        print(f"║{bold(green(' BILL MANAGER ')):^55}║")  # Centered, bold, and green text
+        print("╠" + "═" * 38 + "╣")  # Separator
+        print("║ 1. View Bills" + " " * 24 + "║")
+        print("║ 2. View Unpaid Bills" + " " * 17 + "║")
+        print("║ 3. Add Bills" + " " * 25 + "║")
+        print("║ 4. Pay Bills" + " " * 25 + "║")
+        print("║ 5. Delete Bills" + " " * 22 + "║")
+        print("║ 6. Grouped Bills" + " " * 21 + "║")
+        print("║ q. Exit" + " " * 30 + "║")
+        print("╚" + "═" * 38 + "╝\n")  # Bottom border
+
+        menu_label = bold(blue("[BILLS]"))         # Styled label
+        time_label = bold(green(f"{current_time}"))  # Styled time
+        
+        # Print input prompt styled like a NeoVim status bar
+        choice = input(f"{bold(green('[ BILLS MANAGER ]'))} | {blue(' Select an option ')} ➜ ")
 
         if choice == "1":
             view_bills(bills)
@@ -284,13 +333,13 @@ def main():
             group_paid_bills_by_theme(bills)
             input("\nPress Enter to return to the menu...")
             os.system("cls" if os.name == "nt" else "clear")
-        elif choice == "7":
+        elif choice == "q":
             os.system("cls" if os.name == "nt" else "clear")
            # curses.wrapper(exit_screen)
             break
         else:
             print("Invalid choice. Please try again")
-            sleep(1)
+            time.sleep(1)
             os.system("cls" if os.name == "nt" else "clear")
 
 

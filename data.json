@@ -8,16 +8,9 @@
             "icon": "fas fa-network-wired"
         },
         {
-            "event_date": "Sat Apr 05 2025",
-            "event_theme": "Car Insurance",
-            "paid": 1,
-            "amount": 0,
-            "icon": "fas fa-car-burst"
-        },
-        {
             "event_date": "Fri May 23 2025",
             "event_theme": "Internet",
-            "paid": 0,
+            "paid": 1,
             "amount": 114.95,
             "icon": "fas fa-network-wired"
         },
@@ -27,6 +20,41 @@
             "paid": 1,
             "amount": 92.27,
             "icon": "fas fa-car-burst"
+        },
+        {
+            "event_date": "Wed Jul 23 2025",
+            "event_theme": "Internet",
+            "paid": 1,
+            "amount": 144.95,
+            "icon": "fas fa-network-wired"
+        },
+        {
+            "event_date": "Tue Aug 05 2025",
+            "event_theme": "Car Insurance",
+            "paid": 1,
+            "amount": 92.27,
+            "icon": "fas fa-bolt"
+        },
+        {
+            "event_date": "Sat Aug 23 2025",
+            "event_theme": "Internet",
+            "paid": 1,
+            "amount": 144.96,
+            "icon": "fas fa-network-wired"
+        },
+        {
+            "event_date": "Fri Sep 05 2025",
+            "event_theme": "Car Insurance",
+            "paid": 1,
+            "amount": 92.27,
+            "icon": "fas fa-bolt"
+        },
+        {
+            "event_date": "Tue May 05 2026",
+            "event_theme": "Internet",
+            "paid": 1,
+            "amount": 140.96,
+            "icon": "fas fa-network-wired"
         }
     ]
 }
